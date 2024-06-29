@@ -1,5 +1,6 @@
 package com.api.gereciamento.viagens.viagem;
 
+import com.api.gereciamento.viagens.core.enums.Status;
 import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
 import jakarta.persistence.*;
 
@@ -14,50 +15,38 @@ import java.util.List;
 @Entity
 @Table(name = "viagem")
 public class Viagem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-
     private String cidade;
-
     private String estado;
-
     private String pais;
-
     @Column(columnDefinition = "TEXT")
     private String descricao;
-
     @Column(name = "data_inicio")
     private LocalDate dataInicio;
-
     @Column(name = "data_fim")
     private LocalDate dataFim;
-
     @Column(name = "custo_total")
     private BigDecimal custoTotal;
-
     @Enumerated
     @ElementCollection(targetClass = MeioTransporte.class)
     @CollectionTable(name = "viagem_meios_transporte", joinColumns = @JoinColumn(name = "viagem_id"))
     @Column(name = "meio_transporte")
     private List<MeioTransporte> meiosTransporte;
-
     private String hospedagem;
-
     @Column(name = "numero_pessoas")
     private Integer numeroPessoas;
-
     @Column
     private BigDecimal avaliacao;
-
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
-
     @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Viagem() {
     }
@@ -191,5 +180,13 @@ public class Viagem {
 
     public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

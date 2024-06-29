@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     criado_em TIMESTAMP,
     atualizado_em TIMESTAMP,
     role VARCHAR(2),
-    status VARCHAR(2)
+    status VARCHAR(1)
 );
 
 CREATE TABLE IF NOT EXISTS viagem (
@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS viagem (
     numero_pessoas INT,
     avaliacao DECIMAL(3, 2),
     criado_em TIMESTAMP,
-    atualizado_em TIMESTAMP
+    atualizado_em TIMESTAMP,
+    status VARCHAR(1)
 );
 
 CREATE TABLE IF NOT EXISTS viagem_meios_transporte (
