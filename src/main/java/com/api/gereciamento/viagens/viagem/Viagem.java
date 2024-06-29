@@ -2,6 +2,7 @@ package com.api.gereciamento.viagens.viagem;
 
 import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -57,6 +58,20 @@ public class Viagem {
 
     @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
+
+    public Viagem() {
+    }
+
+    public Viagem(String nome, String cidade, String estado, String pais, String descricao, BigDecimal custoTotal, String hospedagem, Integer numeroPessoas) {
+        this.nome = nome;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pais = pais;
+        this.descricao = descricao;
+        this.custoTotal = custoTotal;
+        this.hospedagem = hospedagem;
+        this.numeroPessoas = numeroPessoas;
+    }
 
     public Long getId() {
         return id;
