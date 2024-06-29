@@ -1,4 +1,4 @@
-package com.api.gereciamento.viagens.viagem;
+package com.api.gereciamento.viagens.viagem.enums;
 
 /**
  * Enum dos meios de transporte

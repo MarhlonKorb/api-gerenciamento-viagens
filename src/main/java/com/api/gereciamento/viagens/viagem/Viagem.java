@@ -1,5 +1,6 @@
 package com.api.gereciamento.viagens.viagem;
 
+import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;

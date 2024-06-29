@@ -3,8 +3,10 @@ CREATE TABLE IF NOT EXISTS usuario (
     nome VARCHAR(50),
     email VARCHAR(50),
     password VARCHAR(255),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    criado_em TIMESTAMP,
+    atualizado_em TIMESTAMP,
+    role VARCHAR(2),
+    status VARCHAR(2)
 );
 
 CREATE TABLE IF NOT EXISTS viagem (
@@ -20,8 +22,8 @@ CREATE TABLE IF NOT EXISTS viagem (
     hospedagem VARCHAR(100),
     numero_pessoas INT,
     avaliacao DECIMAL(3, 2),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    criado_em TIMESTAMP,
+    atualizado_em TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS viagem_meios_transporte (
