@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS usuario (
+create TABLE IF NOT EXISTS usuario (
     id BIGSERIAL PRIMARY KEY,
     nome VARCHAR(50),
     email VARCHAR(50),
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     status VARCHAR(1)
 );
 
-CREATE TABLE IF NOT EXISTS viagem (
+create TABLE IF NOT EXISTS viagem (
     id BIGSERIAL PRIMARY KEY,
     nome VARCHAR(100),
     cidade VARCHAR(50),
@@ -29,8 +29,9 @@ CREATE TABLE IF NOT EXISTS viagem (
 
 CREATE TABLE IF NOT EXISTS viagem_meios_transporte (
     viagem_id BIGSERIAL NOT NULL,
-    id_meio_transporte INT,
+    id_meio_transporte INT NOT NULL,
     PRIMARY KEY (viagem_id, id_meio_transporte),
     CONSTRAINT FK_vgmeios_vg FOREIGN KEY (viagem_id) REFERENCES viagem (id),
     UNIQUE (viagem_id, id_meio_transporte)
 );
+

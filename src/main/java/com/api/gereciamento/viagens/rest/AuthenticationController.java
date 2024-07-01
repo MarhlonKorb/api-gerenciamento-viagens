@@ -2,7 +2,7 @@ package com.api.gereciamento.viagens.rest;
 
 import com.api.gereciamento.viagens.authentication.AuthenticationInput;
 import com.api.gereciamento.viagens.authentication.TokenOutput;
-import com.api.gereciamento.viagens.authentication.TokenService;
+import com.api.gereciamento.viagens.authentication.TokenServiceImpl;
 import com.api.gereciamento.viagens.rest.exception.ApiErrors;
 import com.api.gereciamento.viagens.usuario.Usuario;
 import com.api.gereciamento.viagens.usuario.UsuarioInput;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final TokenServiceImpl tokenServiceImpl;
     private final IUsuarioValidador iUsuarioValidador;
     private final UsuarioService usuarioService;
 
@@ -34,12 +34,12 @@ public class AuthenticationController {
      * Construtor da classe, injetando as dependências necessárias.
      *
      * @param authenticationManager Gerenciador de autenticação do Spring Security.
-     * @param tokenService          Serviço para geração e validação de tokens JWT.
+     * @param tokenServiceImpl          Serviço para geração e validação de tokens JWT.
      * @param iUsuarioValidador     Validador de usuário para garantir consistência nos dados.
      */
-    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenServiceImpl tokenServiceImpl, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
+        this.tokenServiceImpl = tokenServiceImpl;
         this.iUsuarioValidador = iUsuarioValidador;
         this.usuarioService = usuarioService;
     }
@@ -59,7 +59,7 @@ public class AuthenticationController {
             var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationInput.email(), authenticationInput.password());
             var auth = authenticationManager.authenticate(usernamePassword);
             // Gera o token JWT para o usuário autenticado
-            var token = tokenService.generateToken(auth.getPrincipal());
+            var token = tokenServiceImpl.generateToken((Usuario) auth.getPrincipal());
             return ResponseEntity.accepted().body(new TokenOutput(token));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, e.getMessage()));
@@ -78,7 +78,7 @@ public class AuthenticationController {
             iUsuarioValidador.validaUsuarioIsCadastrado(usuarioInput.email());
             Usuario usuarioCriado = usuarioService.create(usuarioInput);
             // Gera um token JWT para o novo usuário registrado
-            String token = tokenService.generateToken(usuarioCriado);
+            String token = tokenServiceImpl.generateToken(usuarioCriado);
             return ResponseEntity.ok().body(new TokenOutput(token));
         } catch (UsuarioException ex) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, ex.getMessage()));

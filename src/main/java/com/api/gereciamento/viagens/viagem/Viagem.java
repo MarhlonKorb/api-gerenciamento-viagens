@@ -1,13 +1,13 @@
 package com.api.gereciamento.viagens.viagem;
 
 import com.api.gereciamento.viagens.core.enums.Status;
-import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
+import com.api.gereciamento.viagens.viagemmeiostransporte.ViagemMeiosTransporte;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Representa a classe de modelo da tabela viagem
@@ -30,11 +30,8 @@ public class Viagem {
     private LocalDate dataFim;
     @Column(name = "custo_total")
     private BigDecimal custoTotal;
-    @Enumerated
-    @ElementCollection(targetClass = MeioTransporte.class)
-    @CollectionTable(name = "viagem_meios_transporte", joinColumns = @JoinColumn(name = "viagem_id"))
-    @Column(name = "meio_transporte")
-    private List<MeioTransporte> meiosTransporte;
+    @OneToMany(mappedBy = "viagem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<ViagemMeiosTransporte> viagemMeiosTransporte = new HashSet<>();
     private String hospedagem;
     @Column(name = "numero_pessoas")
     private Integer numeroPessoas;
@@ -51,7 +48,7 @@ public class Viagem {
     public Viagem() {
     }
 
-    public Viagem(String nome, String cidade, String estado, String pais, String descricao, BigDecimal custoTotal, String hospedagem, Integer numeroPessoas) {
+    public Viagem(String nome, String cidade, String estado, String pais, String descricao, BigDecimal custoTotal, String hospedagem, Integer numeroPessoas, Status status) {
         this.nome = nome;
         this.cidade = cidade;
         this.estado = estado;
@@ -60,6 +57,7 @@ public class Viagem {
         this.custoTotal = custoTotal;
         this.hospedagem = hospedagem;
         this.numeroPessoas = numeroPessoas;
+        this.status = status;
     }
 
     public Long getId() {
@@ -134,12 +132,12 @@ public class Viagem {
         this.custoTotal = custoTotal;
     }
 
-    public List<MeioTransporte> getMeiosTransporte() {
-        return meiosTransporte;
+    public Set<ViagemMeiosTransporte> getViagemMeiosTransporte() {
+        return viagemMeiosTransporte;
     }
 
-    public void setMeiosTransporte(List<MeioTransporte> meiosTransporte) {
-        this.meiosTransporte = meiosTransporte;
+    public void setViagemMeiosTransporte(Set<ViagemMeiosTransporte> viagemMeiosTransporte) {
+        this.viagemMeiosTransporte = viagemMeiosTransporte;
     }
 
     public String getHospedagem() {
@@ -188,5 +186,10 @@ public class Viagem {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void addMeioTransporte(ViagemMeiosTransporte meioTransporte) {
+        viagemMeiosTransporte.add(meioTransporte);
+        meioTransporte.setViagem(this);
     }
 }

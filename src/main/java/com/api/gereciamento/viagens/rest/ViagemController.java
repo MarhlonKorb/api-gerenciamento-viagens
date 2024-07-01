@@ -2,10 +2,11 @@ package com.api.gereciamento.viagens.rest;
 
 import com.api.gereciamento.viagens.viagem.Viagem;
 import com.api.gereciamento.viagens.viagem.ViagemInput;
+import com.api.gereciamento.viagens.viagem.ViagemOutput;
 import com.api.gereciamento.viagens.viagem.ViagemService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("viagens")
@@ -17,8 +18,13 @@ public class ViagemController {
         this.viagemService = viagemService;
     }
 
+    @GetMapping
+    public List<ViagemOutput> getAll(){
+        return viagemService.getAll();
+    }
+
     @PostMapping
-    public Viagem create(ViagemInput viagemInput){
+    public ViagemOutput create(@RequestBody ViagemInput viagemInput){
         return viagemService.create(viagemInput);
     }
 
