@@ -1,5 +1,6 @@
 package com.api.gereciamento.viagens.viagemmeiostransporte;
 
+import com.api.gereciamento.viagens.viagem.Viagem;
 import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,8 +12,8 @@ import java.util.Objects;
  */
 public class ViagemMeiosTransporteId implements Serializable {
 
-    private Long viagem;
-    private MeioTransporte idMeioTransporte;
+    private Viagem viagem;
+    private MeioTransporte meioTransporte;
 
     /**
      * Construtor padrão.
@@ -22,21 +23,21 @@ public class ViagemMeiosTransporteId implements Serializable {
     /**
      * Construtor com parâmetros.
      * @param viagem ID da viagem.
-     * @param idMeioTransporte ID do meio de transporte.
+     * @param meioTransporte ID do meio de transporte.
      */
-    public ViagemMeiosTransporteId(Long viagem, MeioTransporte idMeioTransporte) {
+    public ViagemMeiosTransporteId(Viagem viagem, MeioTransporte meioTransporte) {
         this.viagem = viagem;
-        this.idMeioTransporte = idMeioTransporte;
+        this.meioTransporte = meioTransporte;
     }
 
-    public ViagemMeiosTransporteId(Long idMeioTransporte) {
+    public ViagemMeiosTransporteId(Long meioTransporte) {
     }
 
     /**
      * Obtém o ID da viagem.
      * @return ID da viagem.
      */
-    public Long getViagem() {
+    public Viagem getViagem() {
         return viagem;
     }
 
@@ -44,7 +45,7 @@ public class ViagemMeiosTransporteId implements Serializable {
      * Define o ID da viagem.
      * @param viagem ID da viagem.
      */
-    public void setViagem(Long viagem) {
+    public void setViagem(Viagem viagem) {
         this.viagem = viagem;
     }
 
@@ -52,16 +53,16 @@ public class ViagemMeiosTransporteId implements Serializable {
      * Obtém o ID do meio de transporte.
      * @return ID do meio de transporte.
      */
-    public MeioTransporte getIdMeioTransporte() {
-        return idMeioTransporte;
+    public MeioTransporte getMeioTransporte() {
+        return meioTransporte;
     }
 
     /**
      * Define o ID do meio de transporte.
-     * @param idMeioTransporte ID do meio de transporte.
+     * @param meioTransporte ID do meio de transporte.
      */
-    public void setIdMeioTransporte(MeioTransporte idMeioTransporte) {
-        this.idMeioTransporte = idMeioTransporte;
+    public void setMeioTransporte(MeioTransporte meioTransporte) {
+        this.meioTransporte = meioTransporte;
     }
 
     /**
@@ -74,7 +75,7 @@ public class ViagemMeiosTransporteId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ViagemMeiosTransporteId that = (ViagemMeiosTransporteId) o;
-        return Objects.equals(viagem, that.viagem) && Objects.equals(idMeioTransporte, that.idMeioTransporte);
+        return Objects.equals(viagem, that.viagem) && Objects.equals(meioTransporte, that.meioTransporte);
     }
 
     /**
@@ -83,6 +84,6 @@ public class ViagemMeiosTransporteId implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(viagem, idMeioTransporte);
+        return Objects.hash(viagem, meioTransporte);
     }
 }

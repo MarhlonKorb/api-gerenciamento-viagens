@@ -69,7 +69,7 @@ public class TokenServiceImpl implements TokenService {
                     .getSubject();
         } catch (JWTVerificationException exception) {
             // Retorna uma string vazia se a validação falhar
-            throw new JWTVerificationException("Token com formato inválido!");
+            throw new JWTVerificationException("Token com formato inválido! " + exception.getMessage());
         }
     }
 

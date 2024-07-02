@@ -1,7 +1,9 @@
 package com.api.gereciamento.viagens.viagem;
 
+import com.api.gereciamento.viagens.core.abstractentities.entidadeauditada.EntidadeAuditada;
 import com.api.gereciamento.viagens.core.enums.Status;
 import com.api.gereciamento.viagens.viagemmeiostransporte.ViagemMeiosTransporte;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,11 +15,8 @@ import java.util.Set;
  * Representa a classe de modelo da tabela viagem
  */
 @Entity
-@Table(name = "viagem")
-public class Viagem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table
+public class Viagem  extends EntidadeAuditada {
     private String nome;
     private String cidade;
     private String estado;
@@ -30,6 +29,7 @@ public class Viagem {
     private LocalDate dataFim;
     @Column(name = "custo_total")
     private BigDecimal custoTotal;
+    @JsonManagedReference
     @OneToMany(mappedBy = "viagem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ViagemMeiosTransporte> viagemMeiosTransporte = new HashSet<>();
     private String hospedagem;
@@ -37,13 +37,6 @@ public class Viagem {
     private Integer numeroPessoas;
     @Column
     private BigDecimal avaliacao;
-    @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
-    @Column(name = "atualizado_em")
-    private LocalDateTime atualizadoEm;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     public Viagem() {
     }
@@ -57,15 +50,7 @@ public class Viagem {
         this.custoTotal = custoTotal;
         this.hospedagem = hospedagem;
         this.numeroPessoas = numeroPessoas;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        super.setStatus(status);
     }
 
     public String getNome() {
@@ -162,30 +147,6 @@ public class Viagem {
 
     public void setAvaliacao(BigDecimal avaliacao) {
         this.avaliacao = avaliacao;
-    }
-
-    public LocalDateTime getCriadoEm() {
-        return criadoEm;
-    }
-
-    public void setCriadoEm(LocalDateTime criadoEm) {
-        this.criadoEm = criadoEm;
-    }
-
-    public LocalDateTime getAtualizadoEm() {
-        return atualizadoEm;
-    }
-
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
-        this.atualizadoEm = atualizadoEm;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public void addMeioTransporte(ViagemMeiosTransporte meioTransporte) {

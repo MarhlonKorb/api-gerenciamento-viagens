@@ -6,8 +6,11 @@ import com.api.gereciamento.viagens.viagemmeiostransporte.ViagemMeiosTransporte;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,7 @@ public class ViagemServiceImpl implements ViagemService {
         modelMapper.typeMap(Viagem.class, ViagemOutput.class).addMappings(mapper -> {
             mapper.using(context -> ((Set<ViagemMeiosTransporte>) context.getSource())
                             .stream()
-                            .map(ViagemMeiosTransporte::getIdMeioTransporte) // Obtém o enum MeioTransporte
+                            .map(ViagemMeiosTransporte::getMeioTransporte) // Obtém o enum MeioTransporte
                             .map(Enum::ordinal) // Converte o enum para seu valor ordinal (int)
                             .collect(Collectors.toSet())) // Coleta os valores ordinais em um Set
                     .map(Viagem::getViagemMeiosTransporte, ViagemOutput::setIdsMeiosTransporte); // Mapeia o Set resultante para ViagemOutput
@@ -59,18 +62,18 @@ public class ViagemServiceImpl implements ViagemService {
                 viagemInput.hospedagem(), viagemInput.numeroPessoas(), Status.valueOf(viagemInput.status())
         );
         // Adiciona os meios de transporte à Viagem
-        viagemInput.idsMeiosTransporte().forEach(idMeioTransporte ->
+        viagemInput.idsMeiosTransporte().stream().sorted().forEach(idMeioTransporte ->
                 viagem.addMeioTransporte(new ViagemMeiosTransporte(MeioTransporte.fromId(idMeioTransporte)))
-        );
+        ); ;
         final var viagemCriada = viagemRepository.save(viagem);
         // Mapeia a entidade Viagem criada para ViagemOutput e retorna
         return modelMapper.map(viagemCriada, ViagemOutput.class);
     }
 
     @Override
-    public List<ViagemOutput> getAll() {
-        List<Viagem> viagens = viagemRepository.findAll();
-        return modelMapper.map(viagens, new TypeToken<List<ViagemOutput>>() {
+    public Page<ViagemOutput> getAllPageable() {
+        Page<Viagem> viagens = viagemRepository.findAllByStatus(Status.A, PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "dataCriacao")));
+        return modelMapper.map(viagens, new TypeToken<Page<ViagemOutput>>() {
         }.getType());
     }
 

@@ -1,12 +1,10 @@
 package com.api.gereciamento.viagens.rest;
 
-import com.api.gereciamento.viagens.viagem.Viagem;
 import com.api.gereciamento.viagens.viagem.ViagemInput;
 import com.api.gereciamento.viagens.viagem.ViagemOutput;
 import com.api.gereciamento.viagens.viagem.ViagemService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("viagens")
@@ -19,8 +17,8 @@ public class ViagemController {
     }
 
     @GetMapping
-    public List<ViagemOutput> getAll(){
-        return viagemService.getAll();
+    public Page<ViagemOutput> getAll(){
+        return viagemService.getAllPageable();
     }
 
     @PostMapping
