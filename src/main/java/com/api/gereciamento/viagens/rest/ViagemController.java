@@ -4,6 +4,8 @@ import com.api.gereciamento.viagens.viagem.ViagemInput;
 import com.api.gereciamento.viagens.viagem.ViagemOutput;
 import com.api.gereciamento.viagens.viagem.ViagemService;
 import org.springframework.data.domain.Page;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +19,7 @@ public class ViagemController {
     }
 
     @GetMapping
-    public Page<ViagemOutput> getAll(){
+    public PagedModel<EntityModel<ViagemOutput>> getAll(){
         return viagemService.getAllPageable();
     }
 

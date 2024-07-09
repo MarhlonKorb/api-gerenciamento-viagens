@@ -2,6 +2,9 @@ package com.api.gereciamento.viagens.viagemmeiostransporte;
 
 import com.api.gereciamento.viagens.viagem.Viagem;
 import com.api.gereciamento.viagens.viagem.enums.MeioTransporte;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,24 +17,6 @@ public class ViagemMeiosTransporteId implements Serializable {
 
     private Viagem viagem;
     private MeioTransporte meioTransporte;
-
-    /**
-     * Construtor padrão.
-     */
-    public ViagemMeiosTransporteId() {}
-
-    /**
-     * Construtor com parâmetros.
-     * @param viagem ID da viagem.
-     * @param meioTransporte ID do meio de transporte.
-     */
-    public ViagemMeiosTransporteId(Viagem viagem, MeioTransporte meioTransporte) {
-        this.viagem = viagem;
-        this.meioTransporte = meioTransporte;
-    }
-
-    public ViagemMeiosTransporteId(Long meioTransporte) {
-    }
 
     /**
      * Obtém o ID da viagem.

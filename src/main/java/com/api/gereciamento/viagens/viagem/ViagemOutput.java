@@ -1,9 +1,12 @@
 package com.api.gereciamento.viagens.viagem;
 
 import com.api.gereciamento.viagens.core.enums.Status;
+import com.api.gereciamento.viagens.viagemmeiostransporte.ViagemMeiosTransporte;
+
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ViagemOutput {
     private String nome;
@@ -12,7 +15,7 @@ public class ViagemOutput {
     private String pais;
     private String descricao;
     private BigDecimal custoTotal;
-    private Set<Integer> idsMeiosTransporte = new HashSet<>();
+    private Set<Integer> viagemMeiosTransporte = new HashSet<>();
     private String hospedagem;
     private Integer numeroPessoas;
 
@@ -66,12 +69,12 @@ public class ViagemOutput {
         this.custoTotal = custoTotal;
     }
 
-    public Set<Integer> getIdsMeiosTransporte() {
-        return idsMeiosTransporte;
+    public Set<Integer> getViagemMeiosTransporte() {
+        return viagemMeiosTransporte;
     }
 
-    public void setIdsMeiosTransporte(Set<Integer> idsMeiosTransporte) {
-        this.idsMeiosTransporte = idsMeiosTransporte;
+    public void setViagemMeiosTransporte(Set<ViagemMeiosTransporte> viagemMeiosTransporte) {
+        this.viagemMeiosTransporte = viagemMeiosTransporte.stream().map(v -> v.getMeioTransporte().ordinal()).collect(Collectors.toSet());
     }
 
     public String getHospedagem() {
